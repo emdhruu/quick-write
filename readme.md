@@ -32,5 +32,5 @@ QuickWrite is a **full-stack web application** that allows users to **write, edi
 
 ```sh
 git clone https://github.com/your-username/quick-write.git
-cd clouddrive
+cd quick-write
 ```
