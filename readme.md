@@ -22,7 +22,7 @@ QuickWrite is a **full-stack web application** that allows users to **write, edi
 - Google Drive API
 - Passport.js (for authentication)
 
-### **Database (If Needed)**
+### **Database**
 
 - MySQL (via Prisma ORM)
 
