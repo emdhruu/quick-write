@@ -1,4 +1,4 @@
-# 🌥️ CloudDrive
+# QuickWrite
 
 CloudDrive is a **full-stack web application** that allows users to **write, edit, and save letters** to their **Google Drive** using Google authentication.
 
