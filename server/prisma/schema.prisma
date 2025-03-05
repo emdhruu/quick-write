@@ -18,20 +18,20 @@ model User {
   name      String?
   email     String   @unique
   googleId  String   @unique
-  avatar   String?   
+  avatar    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   drafts    Draft[]
 }
 
-
 model Draft {
-  id        String   @id @default(uuid())
-  title     String
-  content   String
-  isSaved   Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String   @id @default(uuid())
+  title             String
+  content           String
+  isSaved           Boolean  @default(false)
+  googleDriveFileId String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
