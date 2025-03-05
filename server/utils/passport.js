@@ -16,6 +16,7 @@ passport.use(
       clientSecret: clientSecret,
       callbackURL: callbackURL,
       passReqToCallback: true,
+      scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
@@ -26,6 +27,8 @@ passport.use(
           lastName: profile.name?.familyName,
           email: profile.emails?.[0]?.value,
           avatar: profile.photos?.[0]?.value,
+          accessToken,
+          refreshToken,
         };
 
         cb(null, user);
