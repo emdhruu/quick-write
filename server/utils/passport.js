@@ -1,18 +1,47 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
+const clientID = process.env.GOOGLE_CLIENT_ID;
+const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const callbackURL = process.env.CALLBACK_URL;
+
+if (!clientID || !clientSecret || !callbackURL) {
+  throw new Error("Google OAuth credentials are missing in .env");
+}
+
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/api/google/callback",
+      clientID: clientID,
+      clientSecret: clientSecret,
+      callbackURL: callbackURL,
       passReqToCallback: true,
     },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
+    async (accessToken, refreshToken, profile, cb) => {
+      try {
+        const user = {
+          googleId: profile.id,
+          name: profile.displayName,
+          firstName: profile.name?.givenName,
+          lastName: profile.name?.familyName,
+          email: profile.emails?.[0]?.value,
+          avatar: profile.photos?.[0]?.value,
+        };
+
+        cb(null, user);
+      } catch (error) {
+        cb(error, false);
+      }
     }
   )
 );
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+export default passport;
